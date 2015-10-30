@@ -23,7 +23,9 @@ sessionInfo()
 ##Data summary and subset
 ```{r}
 #Shows the subset and summary of the data frame
-#source("../01 Data/R_ExtractTransform.R", echo = TRUE)
+source("../01 Data/R_ExtractTransform.R", echo = TRUE)
+```
+```{r}
 #source("../01 Data/R_Load.R", echo = TRUE)
 ```
 
@@ -52,6 +54,9 @@ We found that for those who said yes there seemed to be a longer call duration a
 ![](./Crosstab.jpg)
 
 ####Findings:
+For this graph, we compared the average call duration across target market groups sectioned by education level (Education) and whether or not they have a housing loan (Housing). We also further catgorized the market segment groups by a key performance indicator: the ratio of campaign successes to campaign failures in those of the same education level (Calculated Success KPI). Campaign success is defined as when they accepted a term deposit (Y) offer as a result of the campaign. A 'High' rating in the KPI indicated that the ratio of successes to failures exceeded 15%. A 'Low' rating indicated the ratio of successes to failures was less than 10%. This KPI rating also helps showcase which education level group the bank had more success in persuading.
+
+We found that the bank generally found higher success rates when contacting people of higher education levels. It also seems that people of higher education levels also accepted the term deposit offer in a shorter call duration. Meanwhile, the bank had more difficulty persuading the market segments of  elementary and junior high graduates. If the bank were to continue the campaign, we would suggest for them to spend more time and effort persuading those of higher education levels, as each second of a telemarketing call is more valuable in bringing these people to a decision.
 
 ***
 
