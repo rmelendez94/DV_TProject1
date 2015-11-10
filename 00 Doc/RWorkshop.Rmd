@@ -67,10 +67,16 @@ We found that the bank generally found higher success rates when contacting peop
 ***
 
 ##Bar Chart and Reference Line
+
+####R Visualization
+
 ```{r}
 #Shows the subset and summary of the data frame
-#source("../03 R SQL Visualizations/Barchart_RLine.R", echo = TRUE)
+source("../03 R SQL Visualizations/Barchart_RLine.R", echo = TRUE)
 ```
+
+####Tableau Visualization
+
 ![](./Barchart.jpg)
 
 ####Findings:

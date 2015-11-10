@@ -1,0 +1,17 @@
+{
+    "contents" : "require(tidyr)\nrequire(dplyr)\nrequire(extrafont)\nrequire(ggplot2)\n\ndfb <- df %>% group_by(POUTCOME, Y) %>% summarise(AVG_CAMPAIGN = mean(CAMPAIGN))\ndfb1 <- dfb %>% ungroup %>% group_by(POUTCOME) %>% summarise(WINDOW_AVG_CAMPAIGN = mean(AVG_CAMPAIGN))\ndfb <- inner_join(dfb, dfb1, by=\"POUTCOME\") \n\n#spread(dfb, Y, AVG_CAMPAIGN) %>% View\n\nggplot() + \n  coord_cartesian() + \n  scale_x_discrete() +\n  scale_y_continuous() +\n  facet_wrap(~POUTCOME, ncol=1) +\n  labs(title='Portuguese Bank Marketing Campaign Effectiveness\\nScatter Plot\\nAVG_CAMPAIGN, WINDOW_AVG_CAMPAIGN') +\n  labs(x=paste(\"Y (OUTCOME)\"), y=paste(\"AVG_CAMPAIGN\")) +\n  layer(data=dfb, \n        mapping=aes(x=Y, y=AVG_CAMPAIGN, color=Y, fill=Y), \n        stat=\"identity\", \n        stat_params=list(), \n        geom=\"bar\",\n        geom_params=list(width=.25), \n        position=position_identity()\n  ) + coord_flip() +\n  layer(data=dfb, \n        mapping=aes(x=Y, y=AVG_CAMPAIGN, label=round(AVG_CAMPAIGN, 4)), \n        stat=\"identity\", \n        stat_params=list(), \n        geom=\"text\",\n        geom_params=list(colour=\"black\", hjust=-0.5, size=3.5), \n        position=position_identity()\n  ) +\n  layer(data=dfb, \n        mapping=aes(x=Y, y=AVG_CAMPAIGN, label=round(WINDOW_AVG_CAMPAIGN, 4)), \n        stat=\"identity\", \n        stat_params=list(), \n        geom=\"text\",\n        geom_params=list(colour=\"black\", hjust=-2, size=3.5), \n        position=position_identity()\n  ) +\n  layer(data=dfb, \n        mapping=aes(x=Y, y=AVG_CAMPAIGN, label=round(AVG_CAMPAIGN - WINDOW_AVG_CAMPAIGN, 4)), \n        stat=\"identity\", \n        stat_params=list(), \n        geom=\"text\",\n        geom_params=list(colour=\"black\", hjust=-5, size=3.5), \n        position=position_identity()\n  ) +\n  layer(data=dfb, \n        mapping=aes(yintercept = WINDOW_AVG_CAMPAIGN), \n        geom=\"hline\",\n        geom_params=list(colour=\"red\")\n  ) \n",
+    "created" : 1447178738265.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "41543779",
+    "id" : "EE5D65D3",
+    "lastKnownWriteTime" : 1447180350,
+    "path" : "~/Desktop/Desktop/UT/Fall 2015/Data Visualization/DV_TProject1/03 R SQL Visualizations/Barchart_RLine.R",
+    "project_path" : "03 R SQL Visualizations/Barchart_RLine.R",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
