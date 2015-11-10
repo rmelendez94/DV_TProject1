@@ -11,7 +11,7 @@ ggplot() +
   coord_cartesian() + 
   scale_x_continuous() +
   scale_y_continuous() +
-  labs(title='Portuguese Bank Marketing Campaign Effectiveness') +
+  labs(title='Portuguese Bank Marketing Campaign Effectiveness\nScatter Plot') +
   labs(x="Duration", y=paste("Consumer Price Index")) +
   layer(data=dfs, 
         mapping=aes(x=as.numeric(as.character(DURATION)), y=as.numeric(as.character(CONS_PRICE_IDX)), color=Y),
