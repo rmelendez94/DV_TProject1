@@ -14,7 +14,7 @@ ggplot() +
   scale_x_discrete() +
   scale_y_continuous() +
   facet_wrap(~POUTCOME, ncol=1) +
-  labs(title='Portuguese Bank Marketing Campaign Effectiveness\nScatter Plot\nAVG_CAMPAIGN, WINDOW_AVG_CAMPAIGN') +
+  labs(title='Portuguese Bank Marketing Campaign Effectiveness\nBar Chart\nAVG_CAMPAIGN, WINDOW_AVG_CAMPAIGN') +
   labs(x=paste("Y (OUTCOME)"), y=paste("AVG_CAMPAIGN")) +
   layer(data=dfb, 
         mapping=aes(x=Y, y=AVG_CAMPAIGN, color=Y, fill=Y), 
