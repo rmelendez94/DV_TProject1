@@ -26,17 +26,23 @@ sessionInfo()
 source("../01 Data/R_ExtractTransform.R", echo = TRUE)
 ```
 ```{r}
-#source("../01 Data/R_Load.R", echo = TRUE)
+source("../01 Data/R_Load.R", echo = TRUE)
 ```
 
 ####Explanation of Data:
 This data relates to the direct marketing campaign of a Portuguese bank to have people subscribe to a term deposit at their institution. The campaign had gathered data regard their campaign efforts, individuals' demographics, and external social situations at the time of the campaign. 
 
 ##Scatter Plot
+
+####R Visualization
+
 ```{r}
 #Shows the subset and summary of the data frame
-#source("../03 R SQL Visualizations/ScatterPlot.R", echo = TRUE)
+source("../03 R SQL Visualizations/ScatterPlot.R", echo = TRUE)
 ```
+
+####Tableau Visualization
+
 ![](./Scatter Plot.jpg)
 
 ####Findings:
