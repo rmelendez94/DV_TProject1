@@ -1,11 +1,11 @@
 require(dplyr)
 
 # Use getwd() and use your filepath to 01 Data
-setwd("~/Desktop/Desktop/UT/Fall 2015/Data Visualization/DV_TProject1/01 Data/CSVs")
+setwd("~/Data Visualization/DV_TProject1/01 Data/CSVs")
 
-file_path <- "bank-additional.csv"
+file_path <- "job-type.csv"
 
-df <- rename(read.csv(file_path, stringsAsFactors = FALSE, sep = ";"), dflt = default)
+df <- rename(read.csv(file_path, stringsAsFactors = FALSE, sep = ","))
 
 # Capitalizing for readability
 names(df) <- toupper(names(df))
@@ -16,7 +16,7 @@ names(df) <- gsub("\\.+", "_", names(df))
 names(df)
 
 # Make dataframe of our measures
-measures <- c("AGE", "DURATION", "CAMPAIGN", "PDAYS", "PREVIOUS", "EMP_VAR_RATE", "CONS_PRICE_IDX", "CONS_CONF_IDX", "EURIBOR3M", "NR_EMPLOYED")
+measures <- c("AVERAGE_SALARY", "HOURS_PER_WEEK")
 
 # Get rid of special characters in each column.
 # Google ASCII Table to understand the following:
