@@ -6,44 +6,34 @@ require(dplyr)
 KPI_Low_Max_value = .1     
 KPI_Medium_Max_value = .15
 
+df %>% group_by(JOB) %>% summarize() %>% View()
+
 #stuck on the mutate not sure how to get just yes and just no to do the ratio
 #Maybe erade everything and start from scratch again for this file??
-dfc <- df %>% group_by(EDUCATION,Y, HOUSING) %>% summarize(AVG_DURATION = mean(DURATION)) %>% mutate(RATIO = sum_price / sum_carat) %>% mutate(KPI = ifelse(RATIO <= KPI_Low_Max_value, '03 Low', ifelse(RATIO <= KPI_Medium_Max_value, '02 Medium', '01 High'))) 
+dfc <- df %>% mutate(Yyes = ifelse(Y == 'yes', 1, 0), Yno = ifelse(Y == 'no', 1, 0)) %>% group_by(EDUCATION) %>% mutate(Ratio = sum(Yyes)/sum(Yno)) %>% ungroup() %>% group_by(EDUCATION, Y, HOUSING) %>% summarize(AVG_DURATION = round(mean(DURATION),1), Ratio = mean(Ratio)) %>% mutate(KPI = ifelse(Ratio <= KPI_Low_Max_value, '03 Low', ifelse(Ratio <= KPI_Medium_Max_value, '02 Medium', '01 High')))
 
-#spread(dfc, COLOR, SUM_PRICE) %>% View
+spread(dfc, Y, AVG_DURATION) %>% View
+
+dfc$EDUCATION <- factor(dfc$EDUCATION, levels = c("illiterate", "basic4y", "basic6y", "basic9y", "highschool", "universitydegree", "professionalcourse", "unknown"))
 
 ggplot() + 
   coord_cartesian() + 
   scale_x_discrete() +
   scale_y_discrete() +
+  scale_fill_manual(values = c("green","yellow","red")) + 
+  facet_grid(.~EDUCATION) + 
   labs(title='Portuguese Bank Marketing Campaign Effectiveness\nCrosstab\nAVG_DURATION') +
   labs(x=paste("EDUCATION/Y"), y=paste("HOUSING")) +
   layer(data=dfc, 
-        mapping=aes(x=EDUCATION, y=HOUSING, label=AVG_DURATION), 
+        mapping=aes(x=Y, y=HOUSING, label=AVG_DURATION), 
         stat="identity", 
         stat_params=list(), 
         geom="text",
         geom_params=list(colour="black"), 
         position=position_identity()
   ) +
-  layer(data=df, 
-        mapping=aes(x=COLOR, y=CLARITY, label=SUM_CARAT), 
-        stat="identity", 
-        stat_params=list(), 
-        geom="text",
-        geom_params=list(colour="black", vjust=2), 
-        position=position_identity()
-  ) +
-  layer(data=df, 
-        mapping=aes(x=COLOR, y=CLARITY, label=round(RATIO, 2)), 
-        stat="identity", 
-        stat_params=list(), 
-        geom="text",
-        geom_params=list(colour="black", vjust=4), 
-        position=position_identity()
-  ) +
-  layer(data=df, 
-        mapping=aes(x=COLOR, y=CLARITY, fill=KPI), 
+  layer(data=dfc, 
+        mapping=aes(x=Y, y=HOUSING, fill=KPI), 
         stat="identity", 
         stat_params=list(), 
         geom="tile",
