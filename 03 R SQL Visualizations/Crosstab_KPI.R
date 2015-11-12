@@ -29,7 +29,7 @@ ggplot() +
         stat="identity", 
         stat_params=list(), 
         geom="text",
-        geom_params=list(colour="black"), 
+        geom_params=list(colour="black", size=2.8), 
         position=position_identity()
   ) +
   layer(data=dfc, 

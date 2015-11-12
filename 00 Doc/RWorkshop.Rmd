@@ -55,7 +55,7 @@ We found that for those who said yes there seemed to be a longer call duration a
 ##Cross Tab and KPI
 ```{r}
 #Shows the subset and summary of the data frame
-#source("../03 R SQL Visualizations/Crosstab_KPI.R", echo = TRUE)
+source("../03 R SQL Visualizations/Crosstab_KPI.R", echo = TRUE)
 ```
 ![](./Crosstab.jpg)
 
@@ -83,5 +83,25 @@ source("../03 R SQL Visualizations/Barchart_RLine.R", echo = TRUE)
 In this visualization we observed the number of times each person was contacted in the current cmpaign (CAMPAIGN), past campaign outcome (POUTCOME), and current campaign outcome (Y)
 
 Overall, we found that banks, on average, spent more effort on people who have not been contacted in previous campaigns. For those who have previously been a customer, banks required less contact times on average compared to the other two groups. This leaves previous non-customers who were contacted, on average, higher than previous customers, but lower than new targets. Lastly, one consistent trend was that across all groups the average effort needed to persuade those who ultimately said yes was less than those who refused. 
+
+***
+
+##Data Blending 
+
+####R Visualization
+
+```{r}
+#Shows the subset and summary of the data frame
+#source("../03 R SQL Visualizations/Blending.R", echo = TRUE)
+```
+
+####Tableau Visualization
+
+![](./Blending.jpg)
+
+####Findings:
+What was viewed
+
+what we observed
 
 ***

@@ -1,0 +1,17 @@
+{
+    "contents" : "require(tidyr)\nrequire(dplyr)\nrequire(extrafont)\nrequire(ggplot2)\n\ndfs <- df %>% select(DURATION, Y, CONS_PRICE_IDX)\ndfsY <- df %>% select(DURATION, Y, CONS_PRICE_IDX) %>% filter(Y=='yes')\ndfsN <- df %>% select(DURATION, Y, CONS_PRICE_IDX) %>% filter(Y=='no')\n\nggplot() + \n  coord_cartesian() + \n  scale_x_continuous() +\n  scale_y_continuous() +\n  labs(title='Portuguese Bank Marketing Campaign Effectiveness\\nScatter Plot') +\n  labs(x=\"Duration\", y=paste(\"Consumer Price Index\")) +\n  layer(data=dfs, \n        mapping=aes(x=as.numeric(as.character(DURATION)), y=as.numeric(as.character(CONS_PRICE_IDX)), color=Y),\n        stat=\"identity\",\n        stat_params=list(),\n        geom=\"point\",\n        geom_params=list(alpha=.8), \n        position=position_jitter(width=0, height=0)\n  )+\n  layer(data=dfsY, \n        mapping=aes(x=as.numeric(as.character(DURATION)), y=as.numeric(as.character(CONS_PRICE_IDX)), color=Y),\n        stat=\"smooth\",\n        stat_params=list(method= lm, se= FALSE),\n        geom=\"smooth\",\n        geom_params=list(alpha= .8), \n        position=position_jitter(width=0, height=0)\n  )+\n  layer(data=dfsN,\n        mapping=aes(x=as.numeric(as.character(DURATION)), y=as.numeric(as.character(CONS_PRICE_IDX)), color=Y),\n        stat=\"smooth\",\n        stat_params=list(method= lm, se= FALSE),\n        geom=\"smooth\",\n        geom_params=list(alpha= .8), \n        position=position_jitter(width=0, height=0)\n  )\n\n",
+    "created" : 1447359837506.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2005696080",
+    "id" : "1F25F8AD",
+    "lastKnownWriteTime" : 1447176504,
+    "path" : "~/Desktop/Desktop/UT/Fall 2015/Data Visualization/DV_TProject1/03 R SQL Visualizations/ScatterPlot.R",
+    "project_path" : "03 R SQL Visualizations/ScatterPlot.R",
+    "properties" : {
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

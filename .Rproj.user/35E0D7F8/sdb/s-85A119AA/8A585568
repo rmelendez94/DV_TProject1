@@ -1,0 +1,17 @@
+{
+    "contents" : "require(\"jsonlite\")\nrequire(\"RCurl\")\nrequire(ggplot2)\nrequire(dplyr)\n\nKPI_Low_Max_value = .1     \nKPI_Medium_Max_value = .15\n\ndf %>% group_by(JOB) %>% summarize() %>% View()\n\n#stuck on the mutate not sure how to get just yes and just no to do the ratio\n#Maybe erade everything and start from scratch again for this file??\ndfc <- df %>% mutate(Yyes = ifelse(Y == 'yes', 1, 0), Yno = ifelse(Y == 'no', 1, 0)) %>% group_by(EDUCATION) %>% mutate(Ratio = sum(Yyes)/sum(Yno)) %>% ungroup() %>% group_by(EDUCATION, Y, HOUSING) %>% summarize(AVG_DURATION = round(mean(DURATION),1), Ratio = mean(Ratio)) %>% mutate(KPI = ifelse(Ratio <= KPI_Low_Max_value, '03 Low', ifelse(Ratio <= KPI_Medium_Max_value, '02 Medium', '01 High')))\n\nspread(dfc, Y, AVG_DURATION) %>% View\n\ndfc$EDUCATION <- factor(dfc$EDUCATION, levels = c(\"illiterate\", \"basic4y\", \"basic6y\", \"basic9y\", \"highschool\", \"universitydegree\", \"professionalcourse\", \"unknown\"))\n\nggplot() + \n  coord_cartesian() + \n  scale_x_discrete() +\n  scale_y_discrete() +\n  scale_fill_manual(values = c(\"green\",\"yellow\",\"red\")) + \n  facet_grid(.~EDUCATION) + \n  labs(title='Portuguese Bank Marketing Campaign Effectiveness\\nCrosstab\\nAVG_DURATION') +\n  labs(x=paste(\"EDUCATION/Y\"), y=paste(\"HOUSING\")) +\n  layer(data=dfc, \n        mapping=aes(x=Y, y=HOUSING, label=AVG_DURATION), \n        stat=\"identity\", \n        stat_params=list(), \n        geom=\"text\",\n        geom_params=list(colour=\"black\", size=2.8), \n        position=position_identity()\n  ) +\n  layer(data=dfc, \n        mapping=aes(x=Y, y=HOUSING, fill=KPI), \n        stat=\"identity\", \n        stat_params=list(), \n        geom=\"tile\",\n        geom_params=list(alpha=0.50), \n        position=position_identity()\n  )\n",
+    "created" : 1447311349671.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "925820577",
+    "id" : "8A585568",
+    "lastKnownWriteTime" : 1447312223,
+    "path" : "~/Desktop/Desktop/UT/Fall 2015/Data Visualization/DV_TProject1/03 R SQL Visualizations/Crosstab_KPI.R",
+    "project_path" : "03 R SQL Visualizations/Crosstab_KPI.R",
+    "properties" : {
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
