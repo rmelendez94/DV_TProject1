@@ -3,6 +3,7 @@ require(dplyr)
 require(extrafont)
 require(ggplot2)
 
+# still need to make it work for crosstab rather than barchart use crosstab_kpi.r as guide?
 dfbl <-
   data.frame(fromJSON(getURL(
     URLencode(
@@ -19,7 +20,7 @@ dfbl <-
       )
       ), httpheader = c(
         DB = 'jdbc:oracle:thin:@sayonara.microlab.cs.utexas.edu:1521:orcl', USER =
-          'C##cs329e_UTEid', PASS = 'orcl_UTEid', MODE = 'native_mode', MODEL = 'model', returnDimensions = 'False', returnFor = 'JSON'
+          'C##cs329e_rm46926', PASS = 'orcl_rm46926', MODE = 'native_mode', MODEL = 'model', returnDimensions = 'False', returnFor = 'JSON'
       ), verbose = TRUE
     ))); View(df)
 
@@ -28,8 +29,8 @@ ggplot() +
   scale_x_discrete() +
   scale_y_continuous() +
   #facet_wrap(~CLARITY, ncol=1) +
-  labs(title = 'Blending 2 Data Sources') +
-  labs(x = paste("Region Sales"), y = paste("Sum of Sales")) +
+  labs(title = 'Portuguese Bank Marketing Campaign Effectiveness\nBlending\nAVG_SALARY, JOB_TYPE') +
+  labs(x = paste("AVG_SALES"), y = paste("JOB_TYPE")) +
   layer(
     data = dfbl,
     mapping = aes(x = MEASURE_NAMES, y = MEASURE_VALUES),

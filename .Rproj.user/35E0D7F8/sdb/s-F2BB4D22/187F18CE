@@ -1,0 +1,17 @@
+{
+    "contents" : "require(\"jsonlite\")\nrequire(\"RCurl\")\nrequire(ggplot2)\nrequire(dplyr)\n\n# The following is equivalent to \"04 Blending 2 Data Sources.twb\"\n\ndf <- data.frame(fromJSON(getURL(URLencode(gsub(\"\\n\", \" \", 'skipper.cs.utexas.edu:5001/rest/native/?query=\n\"\"\"select region || \\\\\\' \\\\\\' || \\\\\\'Sales\\\\\\' as measure_names, sum(sales) as measure_values from SUPERSTORE_SALES_ORDERS\nwhere country_region = \\\\\\'United States of America\\\\\\'\ngroup by region\nunion all\nselect market || \\\\\\' \\\\\\' || \\\\\\'Coffee_Sales\\\\\\' as measure_names, sum(coffee_sales) as measure_values from COFFEE_CHAIN\ngroup by market\norder by 1;\"\"\"\n')), httpheader=c(DB='jdbc:oracle:thin:@sayonara.microlab.cs.utexas.edu:1521:orcl', USER='C##cs329e_UTEid', PASS='orcl_UTEid', MODE='native_mode', MODEL='model', returnDimensions = 'False', returnFor = 'JSON'), verbose = TRUE))); View(df)\n\nggplot() + \n  coord_cartesian() + \n  scale_x_discrete() +\n  scale_y_continuous() +\n  #facet_wrap(~CLARITY, ncol=1) +\n  labs(title='Blending 2 Data Sources') +\n  labs(x=paste(\"Region Sales\"), y=paste(\"Sum of Sales\")) +\n  layer(data=df, \n        mapping=aes(x=MEASURE_NAMES, y=MEASURE_VALUES), \n        stat=\"identity\", \n        stat_params=list(), \n        geom=\"bar\",\n        geom_params=list(colour=\"blue\"), \n        position=position_identity()\n  ) + coord_flip() +\n  layer(data=df, \n        mapping=aes(x=MEASURE_NAMES, y=MEASURE_VALUES, label=round(MEASURE_VALUES)), \n        stat=\"identity\", \n        stat_params=list(), \n        geom=\"text\",\n        geom_params=list(colour=\"black\", hjust=-0.5), \n        position=position_identity()\n  ) ",
+    "created" : 1447360461629.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2550142477",
+    "id" : "187F18CE",
+    "lastKnownWriteTime" : 1447317235,
+    "path" : "~/Desktop/Desktop/UT/Fall 2015/Data Visualization/DrCannata/RWorkshop/12 Tableau/02 Blending 2 Data Sources.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

@@ -8,8 +8,6 @@ KPI_Medium_Max_value = .15
 
 df %>% group_by(JOB) %>% summarize() %>% View()
 
-#stuck on the mutate not sure how to get just yes and just no to do the ratio
-#Maybe erade everything and start from scratch again for this file??
 dfc <- df %>% mutate(Yyes = ifelse(Y == 'yes', 1, 0), Yno = ifelse(Y == 'no', 1, 0)) %>% group_by(EDUCATION) %>% mutate(Ratio = sum(Yyes)/sum(Yno)) %>% ungroup() %>% group_by(EDUCATION, Y, HOUSING) %>% summarize(AVG_DURATION = round(mean(DURATION),1), Ratio = mean(Ratio)) %>% mutate(KPI = ifelse(Ratio <= KPI_Low_Max_value, '03 Low', ifelse(Ratio <= KPI_Medium_Max_value, '02 Medium', '01 High')))
 
 spread(dfc, Y, AVG_DURATION) %>% View

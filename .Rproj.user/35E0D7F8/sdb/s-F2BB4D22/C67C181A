@@ -1,0 +1,18 @@
+{
+    "contents" : "require(tidyr)\nrequire(dplyr)\nrequire(extrafont)\nrequire(ggplot2)\n\n# still need to make it work for crosstab rather than barchart use crosstab_kpi.r as guide?\ndfbl <-\n  data.frame(fromJSON(getURL(\n    URLencode(\n      gsub(\n        \"\\n\", \" \", 'skipper.cs.utexas.edu:5001/rest/native/?query=\n        \"\"\"select region || \\\\\\' \\\\\\' || \\\\\\'Sales\\\\\\' as measure_names, sum(sales) as measure_values from   SUPERSTORE_SALES_ORDERS\n        where country_region = \\\\\\'United States of America\\\\\\'\n        group by region\n        union all\n        select market || \\\\\\' \\\\\\' || \\\\\\'Coffee_Sales\\\\\\' as measure_names, sum(coffee_sales) as measure_values from COFFEE_CHAIN\n        group by market\n        order by 1;\"\"\"\n        '\n      )\n      ), httpheader = c(\n        DB = 'jdbc:oracle:thin:@sayonara.microlab.cs.utexas.edu:1521:orcl', USER =\n          'C##cs329e_rm46926', PASS = 'orcl_rm46926', MODE = 'native_mode', MODEL = 'model', returnDimensions = 'False', returnFor = 'JSON'\n      ), verbose = TRUE\n    ))); View(df)\n\nggplot() +\n  coord_cartesian() +\n  scale_x_discrete() +\n  scale_y_continuous() +\n  #facet_wrap(~CLARITY, ncol=1) +\n  labs(title = 'Portuguese Bank Marketing Campaign Effectiveness\\nBlending\\nAVG_SALARY, JOB_TYPE') +\n  labs(x = paste(\"AVG_SALES\"), y = paste(\"JOB_TYPE\")) +\n  layer(\n    data = dfbl,\n    mapping = aes(x = MEASURE_NAMES, y = MEASURE_VALUES),\n    stat = \"identity\",\n    stat_params = list(),\n    geom = \"bar\",\n    geom_params = list(colour = \"blue\"),\n    position = position_identity()\n  ) + coord_flip() +\n  layer(\n    data = dfbl,\n    mapping = aes(\n      x = MEASURE_NAMES, y = MEASURE_VALUES, label = round(MEASURE_VALUES)\n    ),\n    stat = \"identity\",\n    stat_params = list(),\n    geom = \"text\",\n    geom_params = list(colour = \"black\", hjust = -0.5),\n    position = position_identity()\n  ) \n",
+    "created" : 1447359807683.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1434031004",
+    "id" : "C67C181A",
+    "lastKnownWriteTime" : 1447360889,
+    "path" : "~/Desktop/Desktop/UT/Fall 2015/Data Visualization/DV_TProject1/03 R SQL Visualizations/Blending.R",
+    "project_path" : "03 R SQL Visualizations/Blending.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
