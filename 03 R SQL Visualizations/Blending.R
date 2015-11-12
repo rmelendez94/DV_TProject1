@@ -9,11 +9,11 @@ dfbl <-
     URLencode(
       gsub(
         "\n", " ", 'skipper.cs.utexas.edu:5001/rest/native/?query=
-        """select region || \\\' \\\' || \\\'Sales\\\' as measure_names, sum(sales) as measure_values from   SUPERSTORE_SALES_ORDERS
+        """Job Type || \\\' \\\' || \\\'JOB\\\' as measure_names, mean(CAMPAIGN) as measure_values from BNKMKTG
         where country_region = \\\'United States of America\\\'
         group by region
         union all
-        select market || \\\' \\\' || \\\'Coffee_Sales\\\' as measure_names, sum(coffee_sales) as measure_values from COFFEE_CHAIN
+        select Job Type || \\\' \\\' || \\\'JOB TYPE\\\' as measure_names, sum(CAMPAIGN) as measure_values from JOBTYPE
         group by market
         order by 1;"""
         '
