@@ -3,51 +3,62 @@ require(dplyr)
 require(extrafont)
 require(ggplot2)
 
-# still need to make it work for crosstab rather than barchart use crosstab_kpi.r as guide?
 dfbl <-
   data.frame(fromJSON(getURL(
     URLencode(
       gsub(
         "\n", " ", 'skipper.cs.utexas.edu:5001/rest/native/?query=
-        """Job Type || \\\' \\\' || \\\'JOB\\\' as measure_names, mean(CAMPAIGN) as measure_values from BNKMKTG
-        where country_region = \\\'United States of America\\\'
-        group by region
+        """select JOB_TYPE as job_name, \\\'AVERAGE_SALARY\\\' as measure_names, 
+sum(AVERAGE_SALARY) as measure_values 
+        from JOBTYPE
+        group by JOB_TYPE
         union all
-        select Job Type || \\\' \\\' || \\\'JOB TYPE\\\' as measure_names, sum(CAMPAIGN) as measure_values from JOBTYPE
-        group by market
-        order by 1;"""
-        '
+        select JOB as job_name, \\\'CAMPAIGN\\\' as measure_names, sum(CAMPAIGN) as measure_values from BNKMKTG
+        group by JOB;"""'
       )
       ), httpheader = c(
         DB = 'jdbc:oracle:thin:@sayonara.microlab.cs.utexas.edu:1521:orcl', USER =
           'C##cs329e_rm46926', PASS = 'orcl_rm46926', MODE = 'native_mode', MODEL = 'model', returnDimensions = 'False', returnFor = 'JSON'
       ), verbose = TRUE
-    ))); View(df)
+    ))); View(dfbl)
+
+# Rearranges measure_names into usable columns
+ndfbl <- spread(dfbl, MEASURE_NAMES, MEASURE_VALUES) %>% arrange(desc(AVERAGE_SALARY))
+
+# Creates an ordered column of job type to be used for ordering in ggplot
+ndfbl$ORDERED_JOBS <- reorder(ndfbl$JOB_NAME, ndfbl$AVERAGE_SALARY)
 
 ggplot() +
   coord_cartesian() +
   scale_x_discrete() +
-  scale_y_continuous() +
+  scale_y_continuous(limits = c(0,100000)) +
+  scale_fill_gradient(low = "grey90", high = "darkgreen", na.value = "grey90", guide = "colourbar") +
+  # I don't think we will need facet_wrap
   #facet_wrap(~CLARITY, ncol=1) +
   labs(title = 'Portuguese Bank Marketing Campaign Effectiveness\nBlending\nAVG_SALARY, JOB_TYPE') +
-  labs(x = paste("AVG_SALES"), y = paste("JOB_TYPE")) +
+  labs(x = paste("JOB TYPE"), y = paste("AVERAGE SALARY")) +
+  theme(panel.background=element_rect(fill='grey100')) +
   layer(
-    data = dfbl,
-    mapping = aes(x = MEASURE_NAMES, y = MEASURE_VALUES),
+    data = ndfbl,
+    mapping = aes(x = ORDERED_JOBS, y = AVERAGE_SALARY, fill = CAMPAIGN),
     stat = "identity",
     stat_params = list(),
     geom = "bar",
-    geom_params = list(colour = "blue"),
+    geom_params = list(),
     position = position_identity()
-  ) + coord_flip() +
+  ) +
+  
+  # need to add text value of campaign count on end of bar
   layer(
-    data = dfbl,
+    data = ndfbl,
     mapping = aes(
-      x = MEASURE_NAMES, y = MEASURE_VALUES, label = round(MEASURE_VALUES)
+      x = ORDERED_JOBS, y = CAMPAIGN, label = round(CAMPAIGN)
     ),
     stat = "identity",
     stat_params = list(),
     geom = "text",
-    geom_params = list(colour = "black", hjust = -0.5),
+    
+    # I cannot get the hjust to work!
+    geom_params = list(colour = "black", hjust = -5),
     position = position_identity()
-  ) 
+  ) + coord_flip() 
