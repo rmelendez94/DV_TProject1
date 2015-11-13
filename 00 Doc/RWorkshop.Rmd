@@ -100,8 +100,10 @@ source("../03 R SQL Visualizations/Blending.R", echo = TRUE)
 ![](./Blending.jpg)
 
 ####Findings:
-What was viewed
+For this visualization, we blended two data sets - job-type and bank-additional - and extracted the relationship between the variables JOB TYPE, CAMPAIGN, and AVERAGE SALARY. We used JOB TYPE as the common variable between the two data sets, and created a relationship in Tableau through JOB TYPE. The CAMPAIGN variable represented the number of contacts performed during the current marketing campaign for a specific client, while the AVERAGE SALARY represented the annual salary of clients, given by job types.
 
-what we observed
+In Tableau, we placed AVERAGE SALARY into columns and JOB TYPE into rows, and illustrated the relationship through a bar graph. Then, we incorporated CAMPAIGN as an aggregated SUM value, marked through color and label. For ease, we sorted the job type by descending salary, rather than alphabetically.
+
+Our findings found an interesting relationship between these three variables. Rather than a simplistic relationship between salary and campaign, we found that the relationship between the two variables was more complicated. While management, services, and entrepreneur had the highest salaries, it did not match the job types with the highest campaign contacts, which were administration, bluecollar, technician, and services. Not only was it unexpected that the relationship between average salary and campaign was not matched exactly, but it was surprising to find these four job types grouped together by CAMPAIGN. Besides management, the other highest salaried job types include entrepreneur, selfemployed, and unknown. Considering this, we speculate that due to the unpredictable and risky nature of the job, marketing may have been less effective in persuading the clients in these three job types to subscribe to a term deposit.
 
 ***

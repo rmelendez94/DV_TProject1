@@ -1,7 +1,7 @@
 require(dplyr)
 
 # Use getwd() and use your filepath to 01 Data
-setwd("~/Desktop/Desktop/UT/Fall 2015/Data Visualization/DV_TProject1/01 Data/CSVs")
+setwd("C:\\Users\\hyunji\\Documents\\DataVisualization\\DV_TProject1\\01 Data\\CSVs")
 
 file_path <- "bank-additional.csv"
 
