@@ -2,6 +2,8 @@ require(tidyr)
 require(dplyr)
 require(extrafont)
 require(ggplot2)
+require(jsonlite)
+require(RCurl)
 
 dfbl <-
   data.frame(fromJSON(getURL(
@@ -20,7 +22,7 @@ sum(AVERAGE_SALARY) as measure_values
         DB = 'jdbc:oracle:thin:@sayonara.microlab.cs.utexas.edu:1521:orcl', USER =
           'C##cs329e_rm46926', PASS = 'orcl_rm46926', MODE = 'native_mode', MODEL = 'model', returnDimensions = 'False', returnFor = 'JSON'
       ), verbose = TRUE
-    ))); View(dfbl)
+    ))); #View(dfbl)
 
 # Rearranges measure_names into usable columns
 ndfbl <- spread(dfbl, MEASURE_NAMES, MEASURE_VALUES) %>% arrange(desc(AVERAGE_SALARY))
@@ -33,9 +35,7 @@ ggplot() +
   scale_x_discrete() +
   scale_y_continuous(limits = c(0,100000)) +
   scale_fill_gradient(low = "grey90", high = "darkgreen", na.value = "grey90", guide = "colourbar") +
-  # I don't think we will need facet_wrap
-  #facet_wrap(~CLARITY, ncol=1) +
-  labs(title = 'Portuguese Bank Marketing Campaign Effectiveness\nBlending\nAVG_SALARY, JOB_TYPE') +
+  labs(title = 'Portuguese Bank Marketing Campaign Effectiveness\nBlending\nAVG_SALARY') +
   labs(x = paste("JOB TYPE"), y = paste("AVERAGE SALARY")) +
   theme(panel.background=element_rect(fill='grey100')) +
   layer(
@@ -44,21 +44,17 @@ ggplot() +
     stat = "identity",
     stat_params = list(),
     geom = "bar",
-    geom_params = list(),
+    geom_params = list(width=.5),
     position = position_identity()
   ) +
-  
-  # need to add text value of campaign count on end of bar
   layer(
     data = ndfbl,
     mapping = aes(
-      x = ORDERED_JOBS, y = CAMPAIGN, label = round(CAMPAIGN)
+      x = ORDERED_JOBS, y = AVERAGE_SALARY, label = round(CAMPAIGN)
     ),
     stat = "identity",
     stat_params = list(),
     geom = "text",
-    
-    # I cannot get the hjust to work!
-    geom_params = list(colour = "black", hjust = -5),
+    geom_params = list(colour = "black", hjust = -0.1),
     position = position_identity()
   ) + coord_flip() 

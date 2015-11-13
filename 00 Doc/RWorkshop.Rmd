@@ -92,7 +92,7 @@ Overall, we found that banks, on average, spent more effort on people who have n
 
 ```{r}
 #Shows the subset and summary of the data frame
-#source("../03 R SQL Visualizations/Blending.R", echo = TRUE)
+source("../03 R SQL Visualizations/Blending.R", echo = TRUE)
 ```
 
 ####Tableau Visualization
